@@ -1032,7 +1032,9 @@ elif [ "$EMAIL_ADDRESS" ]; then
       # Try to determine if the mailx version is the incompatible one
       MAILX_VERSION=$($MAIL_BIN -V 2>/dev/null || echo "unknown")
 
-      if [[ "$MAILX_VERSION" == *"12.5 7/5/10"* ]]; then
+      if [[ "$MAIL_BIN" == *"s-nail" ]]; then
+	$( echo "$body" |$MAIL_BIN -s "$SUBJECT" -M 'text/html' -r "$FROM_EMAIL_ADDRESS" "$EMAIL_ADDRESS" )
+      elif [[ "$MAILX_VERSION" == *"12.5 7/5/10"* ]]; then
         echo "Incompatible version of mailx found, using sendmail instead."
         (
           echo To: "$EMAIL_ADDRESS"
